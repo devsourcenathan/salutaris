@@ -1,12 +1,10 @@
 import './App.css'
-import AuthenticationPage from './pages/authentication'
+import DashboardPage from './pages/dashboard'
 
 function App() {
 
   return (
-    <>
-      <AuthenticationPage />
-    </>
+    <DashboardPage />
   )
 }
 
