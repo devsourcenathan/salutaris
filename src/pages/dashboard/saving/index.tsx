@@ -1,18 +1,14 @@
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
-import { formatAmount } from '@/lib/utils'
-import { EyeOffIcon } from 'lucide-react'
 import React from 'react'
+import { SavingCard } from '../components/saving-card'
 
 export const Saving = () => {
 
-    const [showAmount, setShowAmount] = React.useState(false)
     const [typeChoice, setTypeChoice] = React.useState("week52")
     const savings = [
         {
@@ -95,37 +91,7 @@ export const Saving = () => {
                     <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                         {
                             savings.map(save => {
-                                return <Card>
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium">
-                                            {save.entitled}
-                                        </CardTitle>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            className="h-4 w-4 text-muted-foreground"
-                                        >
-                                            <rect width="20" height="14" x="2" y="5" rx="2" />
-                                            <path d="M2 10h20" />
-                                        </svg>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="text-2xl font-bold">{showAmount ?
-                                            <span className="flex items-center justify-between">
-                                                {
-                                                    formatAmount(save.balance)
-                                                }
-                                                <EyeOffIcon size={20} onClick={() => setShowAmount(false)} cursor="pointer" />
-                                            </span> : <Button onClick={() => setShowAmount(true)}>Show Amount</Button>}</div>
-                                        <br />
-                                        <Badge variant="outline">{save.created_at.toLocaleDateString()}</Badge>
-                                    </CardContent>
-                                </Card>
+                                return <SavingCard save={save} />
                             })
                         }
                     </div>
