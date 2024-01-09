@@ -13,7 +13,7 @@ import React from 'react'
 export const Saving = () => {
 
     const [showAmount, setShowAmount] = React.useState(false)
-
+    const [typeChoice, setTypeChoice] = React.useState("week52")
     const savings = [
         {
             "id": 1,
@@ -49,15 +49,16 @@ export const Saving = () => {
                                 <div className="grid w-full items-center gap-4">
                                     <div className="flex flex-col space-y-1.5">
                                         <Label htmlFor="type">Type</Label>
-                                        <Select>
+                                        <Select defaultValue={typeChoice} onValueChange={(value) => setTypeChoice(value)}>
                                             <SelectTrigger id="framework">
-                                                <SelectValue placeholder="Select" />
+                                                <SelectValue placeholder="Select type" />
                                             </SelectTrigger>
                                             <SelectContent position="popper">
-                                                <SelectItem value="next">Next.js</SelectItem>
-                                                <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                                                <SelectItem value="astro">Astro</SelectItem>
-                                                <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                                                <SelectItem value="week52">52 weeks</SelectItem>
+                                                <SelectItem value="week26">26 weeks</SelectItem>
+                                                <SelectItem value="month12">12 months</SelectItem>
+                                                <SelectItem value="month6">6 months</SelectItem>
+                                                <SelectItem value="perso">Personalise</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
