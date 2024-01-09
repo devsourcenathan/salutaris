@@ -1,5 +1,10 @@
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { formatAmount } from '@/lib/utils'
 import { EyeOffIcon } from 'lucide-react'
@@ -9,16 +14,67 @@ export const Saving = () => {
 
     const [showAmount, setShowAmount] = React.useState(false)
 
+    const savings = [
+        {
+            "id": 1,
+            "entitled": "52 week challenge start 200",
+            "balance": 2000,
+            "created_at": new Date()
+        },
+        {
+            "id": 2,
+            "entitled": "52 week challenge start 100",
+            "balance": 1000,
+            "created_at": new Date()
+        },
+    ]
     return (
         <>
             <div className="flex items-center justify-between space-y-2">
-                <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+                <h2 className="text-3xl font-bold tracking-tight">Mes epargnes</h2>
                 <div className="flex items-center space-x-2">
                     {/* <CalendarDateRangePicker /> */}
-                    <Button>
-                        Epargner maintenant
-                        &nbsp;
-                    </Button>
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button variant="outline">Ajouter un nouvel epargne</Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                            <SheetHeader>
+                                <SheetTitle>Creer un nouvel epargne</SheetTitle>
+                                <SheetDescription>
+                                    Make changes to your profile here. Click save when you're done.
+                                </SheetDescription>
+                            </SheetHeader>
+                            <form className='my-3'>
+                                <div className="grid w-full items-center gap-4">
+                                    <div className="flex flex-col space-y-1.5">
+                                        <Label htmlFor="type">Type</Label>
+                                        <Select>
+                                            <SelectTrigger id="framework">
+                                                <SelectValue placeholder="Select" />
+                                            </SelectTrigger>
+                                            <SelectContent position="popper">
+                                                <SelectItem value="next">Next.js</SelectItem>
+                                                <SelectItem value="sveltekit">SvelteKit</SelectItem>
+                                                <SelectItem value="astro">Astro</SelectItem>
+                                                <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="flex flex-col space-y-1.5">
+                                        <Label htmlFor="name">Name</Label>
+                                        <Input id="name" placeholder="Name of your project" />
+                                    </div>
+                                </div>
+                            </form>
+                            <SheetFooter>
+                                <SheetClose asChild>
+                                    <Button variant="outline">Annuler</Button>
+                                </SheetClose>
+                                <Button type="submit">Creer l'epargne</Button>
+                            </SheetFooter>
+                        </SheetContent>
+                    </Sheet>
                 </div>
             </div>
             <Tabs defaultValue="overview" className="space-y-4">
@@ -35,112 +91,42 @@ export const Saving = () => {
                     </TabsTrigger>
                 </TabsList> */}
                 <TabsContent value="overview" className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">
-                                    Solde
-                                </CardTitle>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    className="h-4 w-4 text-muted-foreground"
-                                >
-                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                </svg>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">{showAmount ?
-                                    <span className="flex items-center justify-between">
-                                        {
-                                            formatAmount(200)
-                                        }
-                                        <EyeOffIcon size={20} onClick={() => setShowAmount(false)} cursor="pointer" />
-                                    </span> : <Button onClick={() => setShowAmount(true)}>Show Amount</Button>}</div>
-
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">
-                                    Subscriptions
-                                </CardTitle>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    className="h-4 w-4 text-muted-foreground"
-                                >
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                                    <circle cx="9" cy="7" r="4" />
-                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                                </svg>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">+2350</div>
-                                <p className="text-xs text-muted-foreground">
-                                    +180.1% from last month
-                                </p>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    className="h-4 w-4 text-muted-foreground"
-                                >
-                                    <rect width="20" height="14" x="2" y="5" rx="2" />
-                                    <path d="M2 10h20" />
-                                </svg>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">+12,234</div>
-                                <p className="text-xs text-muted-foreground">
-                                    +19% from last month
-                                </p>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">
-                                    Active Now
-                                </CardTitle>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    className="h-4 w-4 text-muted-foreground"
-                                >
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                                </svg>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">+573</div>
-                                <p className="text-xs text-muted-foreground">
-                                    +201 since last hour
-                                </p>
-                            </CardContent>
-                        </Card>
+                    <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                        {
+                            savings.map(save => {
+                                return <Card>
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium">
+                                            {save.entitled}
+                                        </CardTitle>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            className="h-4 w-4 text-muted-foreground"
+                                        >
+                                            <rect width="20" height="14" x="2" y="5" rx="2" />
+                                            <path d="M2 10h20" />
+                                        </svg>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="text-2xl font-bold">{showAmount ?
+                                            <span className="flex items-center justify-between">
+                                                {
+                                                    formatAmount(save.balance)
+                                                }
+                                                <EyeOffIcon size={20} onClick={() => setShowAmount(false)} cursor="pointer" />
+                                            </span> : <Button onClick={() => setShowAmount(true)}>Show Amount</Button>}</div>
+                                        <br />
+                                        <Badge variant="outline">{save.created_at.toLocaleDateString()}</Badge>
+                                    </CardContent>
+                                </Card>
+                            })
+                        }
                     </div>
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                         {/* <Card className="col-span-4">
